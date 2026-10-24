@@ -1,0 +1,55 @@
+# Product Requirements Document (PRD)
+## ChronoTask: Gamified Notes + Clock Task Manager for Android
+
+### 1. Executive Summary
+ChronoTask is an Android application that combines note-taking with clock alarms, countdown timers, multi-day sprint accountability cycles (3, 4, 5 days), proof-of-work deliverable submissions, and a gamified behavioral accountability score system.
+
+### 2. Core Game Loop & Scoring Mechanics
+- **Initial Baseline Score**: Every registered user starts with a base score of `100` points.
+- **Task Success (+10 Points)**: When a user finishes and checks off a task before its scheduled timer/deadline expires and submits their task deliverable report ("what was made"), their score increases by `+10` points.
+- **Deadline Breach Penalty (-20 Points)**: If a task's timer reaches zero without completion, the user is penalized `-20` points.
+- **Sprint Mastery Bonus (+50 Points)**: Successfully completing >= 80% of tasks during a multi-day sprint awards an additional +50 discipline points bonus upon report submission.
+- **Score Visibility & Rank HUD**:
+  - Live Score prominently displayed in the app header with tier indicators:
+    - *Master (150+)*: Top tier discipline badge
+    - *Punctual (100 - 149)*: Solid baseline performance
+    - *At Risk (50 - 99)*: Warning state, encouragement to rebuild
+    - *Critical (< 50)*: Danger state, urgent task recovery needed
+  - Score history log recording every credit (+10) and deduction (-20) with timestamp and task reference.
+
+### 3. Authentication System (Google + Email)
+- **Google 1-Tap Sign-In**: Native Google OAuth provider (`GoogleAuthProvider`) integrated with Firebase Auth. Displays user avatar and email.
+- **Email & Password**: Registration and login with password validation.
+- **Anonymous Guest Mode**: Instant trial without requiring credentials, with option to link/upgrade to Google or Email.
+- **Cloud Firestore Persistence**: Bound to Google services configuration (`personal-tasks-5f879`).
+
+### 4. Multi-Task Creation & Batch Deployment
+- **Single Task Creation**: Detailed modal with title, rich notes, priority, and countdown clock (15m, 30m, 1h, 2h, custom).
+- **Batch Multi-Task Creation**: Rapid entry mode allowing users to input multiple task objectives at once with a shared sprint timer or individual timers.
+
+### 5. Task End Responses: Proof of Work / Deliverable Submission
+- When an operative clicks **"End Task"** on an active task:
+  - An **End Task Submission Modal** opens requiring or prompting for what was produced.
+  - Fields:
+    - *Deliverable Summary*: Short statement of what was created (e.g. "Drafted product launch slides and exported PDF").
+    - *Output / Deliverable URL (Optional)*: Link to GitHub PR, Figma file, Google Doc, Loom, or production URL.
+    - *Reflection Notes (Optional)*: Contextual notes on execution.
+  - Upon submission:
+    - The task is marked `completed`.
+    - Deliverable details are permanently attached to the task record.
+    - +10 Points are credited to the user's score.
+    - Celebratory confetti & triumph audio chime are triggered.
+  - In the "Done" tab, completed tasks display a **"View Deliverable"** badge that reveals the submitted work and clickable output link.
+
+### 6. Multi-Day Sprint Timers & Report Submission
+- Users can launch focused accountability cycles for **3 Days**, **4 Days**, **5 Days**, or 7 Days.
+- Shows **Days : Hours : Minutes : Seconds** countdown with an elapsed progress bar.
+- Background push notification at 0: *"Your timer has ended! Submit your report on how many tasks you have done."*
+- End-of-cycle report audit saves to Firebase Firestore (`users/{uid}/sprint_reports`).
+- +50 PTS Sprint Mastery Bonus if completion rate >= 80%.
+
+### 7. UI/UX Design System (Guided by `qwenton-ui`)
+- Apple-like minimalism with soft studio lighting.
+- **STRICTLY NO GRADIENTS**; flat solid OKLCH color values tokenized from `--brand-primary`.
+- Dark mode elevation with layered solid tones (16%, 20%, 26% lightness) and glare-free text (`oklch(90% ...)`).
+- 3D Interactive Clock face and Score Core dial built with `@react-three/fiber`.

@@ -1,0 +1,268 @@
+/* ==========================================================================
+   QWENTON-UI COLOR SCIENCE & THEME ENGINE
+   Strictly Solid OKLCH, Zero Gradients, Apple-Minimalism, Dark Mode Glare Attenuation
+   ========================================================================== */
+
+:root {
+  /* Brand Primary Token (Capped Chroma <= 0.22 to prevent P3 clipping) */
+  --brand-primary: oklch(62% 0.19 250);
+
+  /* Programmatically Derived Accent States via CSS Relative Color Syntax */
+  --brand-hover: oklch(from var(--brand-primary) calc(l + 6%) c h);
+  --brand-active: oklch(from var(--brand-primary) calc(l - 6%) c h);
+  --brand-subtle: oklch(from var(--brand-primary) 22% calc(c * 0.4) h);
+  --brand-border: oklch(from var(--brand-primary) 32% calc(c * 0.5) h);
+
+  /* Status Colors (Solid OKLCH, Strictly No Gradients) */
+  --color-success: oklch(68% 0.18 145);
+  --color-success-subtle: oklch(24% 0.06 145);
+  --color-penalty: oklch(62% 0.21 25);
+  --color-penalty-subtle: oklch(24% 0.07 25);
+  --color-warning: oklch(74% 0.17 75);
+  --color-warning-subtle: oklch(26% 0.06 75);
+
+  /* Elevated Dark Mode Surfaces (Lightness: 16%, 20%, 26%) */
+  --surface-base: oklch(16% 0.01 260);
+  --surface-raised: oklch(20% 0.015 260);
+  --surface-overlay: oklch(26% 0.02 260);
+  --surface-border: oklch(30% 0.02 260);
+  --surface-divider: oklch(22% 0.015 260);
+
+  /* Glare Attenuation Text Hierarchy */
+  --text-primary: oklch(90% 0.01 260);
+  --text-secondary: oklch(72% 0.015 260);
+  --text-muted: oklch(52% 0.02 260);
+
+  /* Fluid Typography & Layout Constants */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Roboto, sans-serif;
+  --font-size-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
+  --font-size-sm: clamp(0.82rem, 0.8rem + 0.15vw, 0.9rem);
+  --font-size-base: clamp(0.95rem, 0.92rem + 0.2vw, 1.05rem);
+  --font-size-lg: clamp(1.15rem, 1.1rem + 0.3vw, 1.3rem);
+  --font-size-xl: clamp(1.4rem, 1.3rem + 0.5vw, 1.7rem);
+  --font-size-2xl: clamp(1.8rem, 1.6rem + 1vw, 2.3rem);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --max-content-width: 480px; /* Optimized for mobile Android view */
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--surface-base);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  text-align: left;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+/* Mobile Frame Container */
+.app-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface-base);
+  position: relative;
+  border-left: 1px solid var(--surface-divider);
+  border-right: 1px solid var(--surface-divider);
+}
+
+/* Solid UI Buttons (Strictly No Gradients) */
+button {
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: background-color 0.18s ease, transform 0.08s ease;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background-color: var(--brand-primary);
+  color: oklch(98% 0.005 260);
+  border-radius: var(--radius-md);
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-hover);
+}
+
+.btn-secondary {
+  background-color: var(--surface-overlay);
+  color: var(--text-primary);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-secondary:hover {
+  background-color: oklch(30% 0.02 260);
+}
+
+.btn-icon {
+  background-color: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  color: var(--text-primary);
+  border-radius: var(--radius-full);
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-success {
+  background-color: var(--color-success);
+  color: oklch(14% 0.02 145);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+}
+
+/* Card Component */
+.card {
+  background-color: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.card:focus-within {
+  border-color: var(--brand-border);
+}
+
+/* Badges (Solid OKLCH) */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge-brand {
+  background-color: var(--brand-subtle);
+  color: oklch(85% 0.1 250);
+  border: 1px solid var(--brand-border);
+}
+
+.badge-success {
+  background-color: var(--color-success-subtle);
+  color: var(--color-success);
+  border: 1px solid oklch(40% 0.1 145);
+}
+
+.badge-penalty {
+  background-color: var(--color-penalty-subtle);
+  color: var(--color-penalty);
+  border: 1px solid oklch(40% 0.12 25);
+}
+
+.badge-warning {
+  background-color: var(--color-warning-subtle);
+  color: var(--color-warning);
+  border: 1px solid oklch(42% 0.1 75);
+}
+
+/* Inputs and Forms */
+input, textarea, select {
+  width: 100%;
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  background-color: var(--surface-overlay);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--brand-primary);
+  background-color: oklch(28% 0.02 260);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Modals & Bottom Sheets */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: oklch(10% 0.01 260 / 0.78);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+.bottom-sheet {
+  width: 100%;
+  max-width: var(--max-content-width);
+  background-color: var(--surface-raised);
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  border-top: 1px solid var(--surface-border);
+  border-left: 1px solid var(--surface-border);
+  border-right: 1px solid var(--surface-border);
+  padding: 20px 20px 32px 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 -8px 30px oklch(0% 0 0 / 0.35);
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-border);
+  border-radius: var(--radius-full);
+}

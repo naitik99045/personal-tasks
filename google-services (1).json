@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "380396481621",
+    "project_id": "personal-tasks-5f879",
+    "storage_bucket": "personal-tasks-5f879.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380396481621:android:1790a641c7aa457753f8dc",
+        "android_client_info": {
+          "package_name": "com.qwenton.tasks"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA92kJnWtggKbkBO3d5zQgta57ABs-ezhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
