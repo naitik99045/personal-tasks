@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTasks } from '../context/TaskContext';
 import { getScoreTier } from '../types';
-import { Shield, History, UserCheck, UserX, PlusCircle, Flame } from 'lucide-react';
+import { Shield, History, UserCheck, UserX, PlusCircle, Flame, Bell } from 'lucide-react';
+import { triggerTestNotification } from '../services/notifications';
 
 interface ScoreHeaderProps {
   onOpenHistory: () => void;
@@ -15,7 +16,14 @@ export const ScoreHeader: React.FC<ScoreHeaderProps> = ({
   onOpenNewTask
 }) => {
   const { profile, user, scoreNotification } = useTasks();
+  const [testSent, setTestSent] = useState(false);
   const tierInfo = getScoreTier(profile.score);
+
+  const handleTestNotification = async () => {
+    await triggerTestNotification();
+    setTestSent(true);
+    setTimeout(() => setTestSent(false), 5000);
+  };
 
   return (
     <header style={{
@@ -61,6 +69,14 @@ export const ScoreHeader: React.FC<ScoreHeaderProps> = ({
         </button>
 
         <div style={{ display: 'flex', gap: '8px' }}>
+          <button
+            onClick={handleTestNotification}
+            className="btn-icon"
+            title="Test Push Notification (Fires in 5s)"
+            style={{ width: '36px', height: '36px', color: testSent ? 'var(--color-success)' : 'var(--text-secondary)' }}
+          >
+            <Bell size={16} />
+          </button>
           <button
             onClick={onOpenHistory}
             className="btn-icon"
@@ -132,6 +148,24 @@ export const ScoreHeader: React.FC<ScoreHeaderProps> = ({
       </div>
 
       {/* Animated Score Alert Pill */}
+      {testSent && (
+        <div style={{
+          marginTop: '12px',
+          padding: '8px 12px',
+          borderRadius: 'var(--radius-sm)',
+          backgroundColor: 'var(--brand-subtle)',
+          color: 'var(--brand-primary)',
+          border: '1px solid var(--brand-border)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontSize: 'var(--font-size-xs)',
+          fontWeight: 600
+        }}>
+          <Bell size={14} />
+          <span>Notification scheduled! Check your notification bar in 5s.</span>
+        </div>
+      )}
       {scoreNotification && (
         <div style={{
           marginTop: '12px',

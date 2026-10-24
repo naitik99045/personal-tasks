@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TaskProvider, useTasks } from './context/TaskContext';
 import { ScoreHeader } from './components/ScoreHeader';
 import { Clock3D } from './components/Clock3D';
@@ -11,6 +11,7 @@ import { EndTaskModal } from './components/EndTaskModal';
 import { ScoreHistoryModal } from './components/ScoreHistoryModal';
 import { AuthModal } from './components/AuthModal';
 import { Plus, CheckCircle2, Clock, AlertOctagon, Layers } from 'lucide-react';
+import { initNotificationEngine } from './services/notifications';
 import './styles/theme.css';
 
 const MainScreen: React.FC = () => {
@@ -26,6 +27,10 @@ const MainScreen: React.FC = () => {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isStartSprintOpen, setIsStartSprintOpen] = useState(false);
+
+  useEffect(() => {
+    initNotificationEngine();
+  }, []);
 
   const activeTasks = tasks.filter(t => t.status === 'active');
   const completedTasks = tasks.filter(t => t.status === 'completed');
